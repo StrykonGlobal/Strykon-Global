@@ -3,11 +3,6 @@
    Main Website Styles
    ======================================== */
 
-
-/* ----------------------------------------
-   Basic Setup
-   ---------------------------------------- */
-
 * {
     box-sizing: border-box;
 }
@@ -18,14 +13,14 @@ html {
 
 body {
     margin: 0;
-    background-color: #0b0b0b;
+    background-color: #080808;
     color: #f2f2f2;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 
 /* ----------------------------------------
-   Color Palette
+   STRYKON COLOR PALETTE
    ---------------------------------------- */
 
 :root {
@@ -34,9 +29,7 @@ body {
     --strykon-gold: #c9a227;
     --strykon-gold-light: #e0bd4f;
 
-    --background-dark: #0b0b0b;
-    --background-panel: #151515;
-    --background-panel-light: #1c1c1c;
+    --background-dark: #080808;
 
     --text-primary: #f2f2f2;
     --text-secondary: #a8a8a8;
@@ -44,11 +37,12 @@ body {
 
 
 /* ----------------------------------------
-   Header
+   HEADER
    ---------------------------------------- */
 
 .site-header {
     position: fixed;
+
     top: 0;
     left: 0;
 
@@ -58,7 +52,9 @@ body {
     display: flex;
     align-items: center;
 
-    background-color: rgba(11, 11, 11, 0.97);
+    background-color: rgba(8, 8, 8, 0.88);
+
+    backdrop-filter: blur(8px);
 
     border-bottom: 1px solid
         rgba(201, 162, 39, 0.35);
@@ -68,7 +64,7 @@ body {
 
 
 /* ----------------------------------------
-   Company Name
+   COMPANY NAME
    ---------------------------------------- */
 
 .company-name {
@@ -88,7 +84,7 @@ body {
 
 
 /* ----------------------------------------
-   Top Navigation
+   TOP NAVIGATION
    ---------------------------------------- */
 
 .top-navigation {
@@ -141,11 +137,11 @@ body {
 
 
 /* ----------------------------------------
-   Main Layout
+   MAIN WEBSITE
    ---------------------------------------- */
 
 .site-main {
-    display: flex;
+    position: relative;
 
     padding-top: 80px;
 
@@ -154,7 +150,46 @@ body {
 
 
 /* ----------------------------------------
-   Left Navigation
+   CONTENT AREA
+   ---------------------------------------- */
+
+.content-area {
+    width: 100%;
+}
+
+
+/* ----------------------------------------
+   CINEMATIC SECTIONS
+   ---------------------------------------- */
+
+.content-section {
+    position: relative;
+
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.08);
+
+    background:
+        linear-gradient(
+            90deg,
+            #101010 0%,
+            #101010 18%,
+            rgba(16, 16, 16, 0.85) 32%,
+            rgba(16, 16, 16, 0.35) 50%,
+            rgba(16, 16, 16, 0.05) 75%,
+            rgba(16, 16, 16, 0) 100%
+        );
+}
+
+
+/* ----------------------------------------
+   LEFT NAVIGATION OVERLAY
    ---------------------------------------- */
 
 .side-navigation {
@@ -168,15 +203,19 @@ body {
 
     padding: 35px 20px;
 
-    background-color:
-        var(--background-panel);
+    background: transparent;
 
-    border-right: 1px solid
-        rgba(255, 255, 255, 0.08);
+    border: none;
 
     overflow-y: auto;
+
+    z-index: 900;
 }
 
+
+/* ----------------------------------------
+   LEFT NAVIGATION TITLE
+   ---------------------------------------- */
 
 .side-navigation-title {
     margin-bottom: 25px;
@@ -191,6 +230,10 @@ body {
     letter-spacing: 0.15em;
 }
 
+
+/* ----------------------------------------
+   LEFT NAVIGATION ITEMS
+   ---------------------------------------- */
 
 .side-nav-item {
     display: block;
@@ -207,7 +250,7 @@ body {
 
     background: transparent;
 
-    color: var(--text-secondary);
+    color: rgba(242, 242, 242, 0.65);
 
     text-align: left;
 
@@ -228,7 +271,7 @@ body {
     color: var(--text-primary);
 
     background-color:
-        rgba(255, 255, 255, 0.035);
+        rgba(0, 0, 0, 0.25);
 }
 
 
@@ -236,7 +279,7 @@ body {
     color: var(--strykon-gold);
 
     background-color:
-        rgba(201, 162, 39, 0.06);
+        rgba(0, 0, 0, 0.3);
 
     border-left-color:
         var(--strykon-gold);
@@ -244,37 +287,20 @@ body {
 
 
 /* ----------------------------------------
-   Main Content
+   CONTENT
    ---------------------------------------- */
 
-.content-area {
-    margin-left: 270px;
-
-    width: calc(100% - 270px);
-}
-
-
-.content-section {
-    min-height: calc(100vh - 80px);
-
-    display: flex;
-    align-items: center;
-
-    padding: 80px;
-
-    border-bottom: 1px solid
-        rgba(255, 255, 255, 0.08);
-
-    background:
-        linear-gradient(
-            120deg,
-            #0b0b0b 0%,
-            #151515 100%
-        );
-}
-
-
 .section-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: 55%;
+
+    margin-left: auto;
+
+    margin-right: 8%;
+
     max-width: 700px;
 }
 
@@ -316,23 +342,20 @@ body {
 
 
 /* ----------------------------------------
-   Scrollbar
+   SCROLLBAR
    ---------------------------------------- */
 
 ::-webkit-scrollbar {
     width: 8px;
 }
 
-
 ::-webkit-scrollbar-track {
     background: #080808;
 }
 
-
 ::-webkit-scrollbar-thumb {
     background: #333333;
 }
-
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--strykon-red);
@@ -340,7 +363,7 @@ body {
 
 
 /* ----------------------------------------
-   Smaller Screens
+   SMALLER SCREENS
    ---------------------------------------- */
 
 @media (max-width: 900px) {
@@ -360,19 +383,14 @@ body {
     }
 
     .side-navigation {
-        width: 210px;
+        width: 230px;
     }
 
-    .content-area {
-        margin-left: 210px;
+    .section-content {
+        width: 60%;
 
-        width: calc(100% - 210px);
+        margin-right: 5%;
     }
-
-    .content-section {
-        padding: 50px;
-    }
-
 }
 
 
@@ -416,30 +434,20 @@ body {
     }
 
     .side-navigation {
-        position: relative;
+        top: 95px;
 
-        top: 0;
+        width: 190px;
 
-        width: 100%;
-
-        height: auto;
-
-        border-right: none;
-
-        border-bottom: 1px solid
-            rgba(255, 255, 255, 0.08);
+        padding: 25px 10px;
     }
 
-    .content-area {
-        margin-left: 0;
+    .section-content {
+        width: 70%;
 
-        width: 100%;
+        margin-right: 5%;
     }
 
     .content-section {
-        min-height: 70vh;
-
-        padding: 40px 25px;
+        min-height: 75vh;
     }
-
 }
