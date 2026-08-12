@@ -30,8 +30,8 @@ const pageNavigation = {
         title: "HOME",
 
         items: [
-            "Advanced Weapons",
             "Mobility Systems",
+            "Advanced Weapons",
             "Powered Systems",
             "Human Advancement",
             "Autonomous Systems",
