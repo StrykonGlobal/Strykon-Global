@@ -136,6 +136,46 @@ function updateSideNavigation(page) {
 
 }
 
+// ----------------------------------------
+// Scroll Spy for Home Sections
+// ----------------------------------------
+
+function updateActiveSideNavigation() {
+
+    const sections =
+        document.querySelectorAll(".content-section");
+
+    const sideNavItems =
+        document.querySelectorAll(".side-nav-item");
+
+    let activeIndex = 0;
+
+    sections.forEach((section, index) => {
+
+        const rect =
+            section.getBoundingClientRect();
+
+        if (rect.top <= window.innerHeight * 0.5) {
+            activeIndex = index;
+        }
+
+    });
+
+    sideNavItems.forEach((item, index) => {
+
+        item.classList.toggle(
+            "active",
+            index === activeIndex
+        );
+
+    });
+
+}
+
+window.addEventListener(
+    "scroll",
+    updateActiveSideNavigation
+);
 
 // ----------------------------------------
 // Change Active Top Navigation
