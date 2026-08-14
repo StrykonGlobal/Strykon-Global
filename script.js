@@ -130,21 +130,6 @@ navigation.items.forEach((item, index) => {
 
     button.textContent = item;
 
-    button.addEventListener("click", () => {
-
-        const sections =
-            document.querySelectorAll(".content-section");
-
-        if (sections[index]) {
-
-            sections[index].scrollIntoView({
-                behavior: "smooth"
-            });
-
-        }
-
-    });
-
     sideNavigationList.appendChild(button);
 
 });
