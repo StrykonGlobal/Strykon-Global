@@ -117,22 +117,37 @@ function updateSideNavigation(page) {
 
     sideNavigationList.innerHTML = "";
 
-    navigation.items.forEach((item, index) => {
+navigation.items.forEach((item, index) => {
 
-        const button =
-            document.createElement("button");
+    const button =
+        document.createElement("button");
 
-        button.classList.add("side-nav-item");
+    button.classList.add("side-nav-item");
 
-        if (index === 0) {
-            button.classList.add("active");
+    if (index === 0) {
+        button.classList.add("active");
+    }
+
+    button.textContent = item;
+
+    button.addEventListener("click", () => {
+
+        const sections =
+            document.querySelectorAll(".content-section");
+
+        if (sections[index]) {
+
+            sections[index].scrollIntoView({
+                behavior: "smooth"
+            });
+
         }
 
-        button.textContent = item;
-
-        sideNavigationList.appendChild(button);
-
     });
+
+    sideNavigationList.appendChild(button);
+
+});
 
 }
 
