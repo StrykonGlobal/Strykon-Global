@@ -16,8 +16,11 @@ const sideNavigationTitle =
 const sideNavigationList =
     document.querySelector("#side-navigation-list");
 
-const contentArea =
-    document.querySelector("#content-area");
+const siteHeader =
+    document.querySelector(".site-header");
+
+const directorateSections =
+    document.querySelectorAll(".content-section[data-directorate]");
 
 
 // ----------------------------------------
@@ -105,6 +108,90 @@ const pageNavigation = {
 
 
 // ----------------------------------------
+// Home Directorate Navigation
+// ----------------------------------------
+
+const homeDirectorates = {
+    "Mobility Systems": "mobility-systems",
+    "Advanced Weapons": "advanced-weapons",
+    "Powered Systems": "powered-systems",
+    "Human Advancement": "human-advancement",
+    "Autonomous Systems": "autonomous-systems",
+    "Strategic Technologies": "strategic-technologies"
+};
+
+
+function isHomeActive() {
+
+    return document.querySelector(".top-nav-item.active")?.dataset.page === "home";
+
+}
+
+
+function setActiveDirectorate(directorate) {
+
+    if (!isHomeActive()) {
+        return;
+    }
+
+    sideNavigationList
+        .querySelectorAll(".side-nav-item")
+        .forEach(item => {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.directorate === directorate
+            );
+
+        });
+
+}
+
+
+function getCurrentDirectorate() {
+
+    const headerHeight = siteHeader.offsetHeight;
+
+    return [...directorateSections]
+        .reduce((closestSection, section) => {
+
+            const currentDistance = Math.abs(
+                section.getBoundingClientRect().top - headerHeight
+            );
+
+            const closestDistance = Math.abs(
+                closestSection.getBoundingClientRect().top - headerHeight
+            );
+
+            return currentDistance < closestDistance
+                ? section
+                : closestSection;
+
+        })
+        .dataset.directorate;
+
+}
+
+
+function scrollToDirectorate(directorate) {
+
+    const section = document.querySelector(`#${directorate}`);
+
+    if (!section) {
+        return;
+    }
+
+    setActiveDirectorate(directorate);
+
+    section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// ----------------------------------------
 // Change Left Navigation
 // ----------------------------------------
 
@@ -117,22 +204,26 @@ function updateSideNavigation(page) {
 
     sideNavigationList.innerHTML = "";
 
-navigation.items.forEach((item, index) => {
+    navigation.items.forEach((item, index) => {
 
-    const button =
-        document.createElement("button");
+        const button =
+            document.createElement("button");
 
-    button.classList.add("side-nav-item");
+        button.classList.add("side-nav-item");
 
-    if (index === 0) {
-        button.classList.add("active");
-    }
+        if (index === 0) {
+            button.classList.add("active");
+        }
 
-    button.textContent = item;
+        button.textContent = item;
 
-    sideNavigationList.appendChild(button);
+        if (page === "home") {
+            button.dataset.directorate = homeDirectorates[item];
+        }
 
-});
+        sideNavigationList.appendChild(button);
+
+    });
 
 }
 
@@ -168,6 +259,10 @@ topNavigationItems.forEach(item => {
 
         updateSideNavigation(selectedPage);
 
+        if (selectedPage === "home") {
+            setActiveDirectorate(getCurrentDirectorate());
+        }
+
         console.log(
             "Selected page:",
             selectedPage
@@ -176,3 +271,67 @@ topNavigationItems.forEach(item => {
     });
 
 });
+
+
+// ----------------------------------------
+// Home Side Navigation Click Events
+// ----------------------------------------
+
+sideNavigationList.addEventListener("click", event => {
+
+    const item = event.target.closest(".side-nav-item");
+
+    if (!item || !isHomeActive() || !item.dataset.directorate) {
+        return;
+    }
+
+    scrollToDirectorate(item.dataset.directorate);
+
+});
+
+
+// ----------------------------------------
+// Home Directorate Scroll Spy
+// ----------------------------------------
+
+let directorateObserver;
+
+function observeDirectorates() {
+
+    if (directorateObserver) {
+        directorateObserver.disconnect();
+    }
+
+    const headerHeight = siteHeader.offsetHeight;
+
+    directorateObserver = new IntersectionObserver(entries => {
+
+        const mostVisibleSection = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((first, second) =>
+                second.intersectionRatio - first.intersectionRatio
+            )[0];
+
+        if (mostVisibleSection) {
+            setActiveDirectorate(
+                mostVisibleSection.target.dataset.directorate
+            );
+        }
+
+    }, {
+        rootMargin: `-${headerHeight}px 0px 0px 0px`,
+        threshold: [0.6]
+    });
+
+    directorateSections.forEach(section => {
+
+        directorateObserver.observe(section);
+
+    });
+
+}
+
+
+observeDirectorates();
+
+window.addEventListener("resize", observeDirectorates);

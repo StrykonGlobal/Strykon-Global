@@ -9,6 +9,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
 }
 
 body {
@@ -165,7 +166,12 @@ body {
 .content-section {
     position: relative;
 
+    height: calc(100vh - 80px);
     min-height: calc(100vh - 80px);
+
+    scroll-margin-top: 80px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 
     display: flex;
     align-items: center;
@@ -448,7 +454,9 @@ body {
     }
 
     .content-section {
-        min-height: 75vh;
+        height: calc(100vh - 95px);
+        min-height: calc(100vh - 95px);
+        scroll-margin-top: 95px;
     }
 }
 
@@ -493,6 +501,28 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+/* ----------------------------------------
+   POWERED SYSTEMS HERO IMAGE
+   ---------------------------------------- */
+
+.powered-systems-section {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(8, 8, 8, 0.98) 0%,
+            rgba(8, 8, 8, 0.88) 20%,
+            rgba(8, 8, 8, 0.55) 38%,
+            rgba(8, 8, 8, 0.15) 60%,
+            rgba(8, 8, 8, 0) 100%
+        ),
+        url("PowerSystem_Herov1.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .section-button {
     margin-top: 25px;
 
