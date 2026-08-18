@@ -523,6 +523,69 @@ body {
     background-repeat: no-repeat;
 }
 
+/* ----------------------------------------
+   HUMAN ADVANCEMENT HERO IMAGE
+   ---------------------------------------- */
+
+.human-advancement-section {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(8, 8, 8, 0.98) 0%,
+            rgba(8, 8, 8, 0.88) 20%,
+            rgba(8, 8, 8, 0.55) 38%,
+            rgba(8, 8, 8, 0.15) 60%,
+            rgba(8, 8, 8, 0) 100%
+        ),
+        url("HumanAdvancment_Hero v1.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ----------------------------------------
+   AUTONOMOUS SYSTEMS HERO IMAGE
+   ---------------------------------------- */
+
+.autonomous-systems-section {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(8, 8, 8, 0.98) 0%,
+            rgba(8, 8, 8, 0.88) 20%,
+            rgba(8, 8, 8, 0.55) 38%,
+            rgba(8, 8, 8, 0.15) 60%,
+            rgba(8, 8, 8, 0) 100%
+        ),
+        url("AutonomousSystems_Hero v1.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ----------------------------------------
+   STRATEGIC TECHNOLOGIES HERO IMAGE
+   ---------------------------------------- */
+
+.strategic-technologies-section {
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(8, 8, 8, 0.98) 0%,
+            rgba(8, 8, 8, 0.88) 20%,
+            rgba(8, 8, 8, 0.55) 38%,
+            rgba(8, 8, 8, 0.15) 60%,
+            rgba(8, 8, 8, 0) 100%
+        ),
+        url("StrategicTechnologies_Hero v1.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .section-button {
     margin-top: 25px;
 
