@@ -120,6 +120,10 @@ const homeDirectorates = {
     "Strategic Technologies": "strategic-technologies"
 };
 
+let isProgrammaticScroll = false;
+let programmaticScrollTarget;
+let programmaticScrollFrame;
+
 
 function isHomeActive() {
 
@@ -181,12 +185,70 @@ function scrollToDirectorate(directorate) {
         return;
     }
 
+    if (programmaticScrollFrame) {
+        cancelAnimationFrame(programmaticScrollFrame);
+    }
+
+    isProgrammaticScroll = true;
+    programmaticScrollTarget = section;
+
     setActiveDirectorate(directorate);
 
     section.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
+
+    waitForProgrammaticScroll();
+
+}
+
+
+function finishProgrammaticScroll() {
+
+    isProgrammaticScroll = false;
+    programmaticScrollTarget = undefined;
+    programmaticScrollFrame = undefined;
+
+}
+
+
+function waitForProgrammaticScroll() {
+
+    const targetPosition =
+        programmaticScrollTarget.getBoundingClientRect().top;
+
+    const headerHeight = siteHeader.offsetHeight;
+
+    if (Math.abs(targetPosition - headerHeight) <= 2) {
+        setActiveDirectorate(
+            programmaticScrollTarget.dataset.directorate
+        );
+
+        finishProgrammaticScroll();
+
+        return;
+    }
+
+    programmaticScrollFrame = requestAnimationFrame(
+        waitForProgrammaticScroll
+    );
+
+}
+
+
+function cancelProgrammaticScroll() {
+
+    if (!isProgrammaticScroll) {
+        return;
+    }
+
+    if (programmaticScrollFrame) {
+        cancelAnimationFrame(programmaticScrollFrame);
+    }
+
+    finishProgrammaticScroll();
+    setActiveDirectorate(getCurrentDirectorate());
 
 }
 
@@ -290,6 +352,33 @@ sideNavigationList.addEventListener("click", event => {
 });
 
 
+window.addEventListener("wheel", cancelProgrammaticScroll, {
+    passive: true
+});
+
+window.addEventListener("touchstart", cancelProgrammaticScroll, {
+    passive: true
+});
+
+window.addEventListener("keydown", event => {
+
+    const scrollKeys = [
+        "ArrowDown",
+        "ArrowUp",
+        "PageDown",
+        "PageUp",
+        "Home",
+        "End",
+        " "
+    ];
+
+    if (scrollKeys.includes(event.key)) {
+        cancelProgrammaticScroll();
+    }
+
+});
+
+
 // ----------------------------------------
 // Home Directorate Scroll Spy
 // ----------------------------------------
@@ -305,6 +394,10 @@ function observeDirectorates() {
     const headerHeight = siteHeader.offsetHeight;
 
     directorateObserver = new IntersectionObserver(entries => {
+
+        if (isProgrammaticScroll) {
+            return;
+        }
 
         const mostVisibleSection = entries
             .filter(entry => entry.isIntersecting)
